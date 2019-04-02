@@ -23,6 +23,8 @@ class MealController extends Controller
   }
 
   public function show(Meal $meal) {
+    $this->authorize('view', $meal);
+
     return view('meals/show', compact('meal'));
   }
 
@@ -51,10 +53,14 @@ class MealController extends Controller
   }
 
   public function edit(Meal $meal) {
+    $this->authorize('update', $meal);
+
     return view('meals/edit', compact('meal'));
   }
 
   public function update(Request $request, Meal $meal) {
+    $this->authorize('update', $meal);
+
     $attributes = $request->validate([
       'date' => 'required|date',
       'type' => ['required', new EnumValue(MealType::class, false)]
@@ -70,6 +76,8 @@ class MealController extends Controller
   }
 
   public function destroy(Meal $meal) {
+    $this->authorize('delete', $meal);
+
     $meal->delete();
     Session::flash('notice', 'Meal was successfully destroyed!');
 
