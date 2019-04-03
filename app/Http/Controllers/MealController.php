@@ -18,8 +18,14 @@ class MealController extends Controller
   }
 
   public function index() {
+    $mealsByDate = Auth::user()->meals()
+                         ->with('products')
+                         ->orderBy('date', 'desc')
+                         ->get()
+                         ->groupBy('date');
+
     return view('meals/index', [
-      'meals' => Auth::user()->meals()->with('products')->get()
+      'mealsByDate' => $mealsByDate
     ]);
   }
 
