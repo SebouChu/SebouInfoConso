@@ -13,6 +13,7 @@
     <thead>
       <th>Date</th>
       <th>Type</th>
+      <th>Total energy</th>
       <th>Actions</th>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
         <tr>
           <td>{{ $meal->formattedDate() }}</td>
           <td>{{ \App\Enums\MealType::getDescription($meal->type) }}</td>
+          <td>{{ $meal->totalEnergy() }} kcal</td>
           <td>
             <a class="btn btn-primary btn-sm" href="{{ route('meals.show', $meal) }}">Show</a>
             <a class="btn btn-warning btn-sm" href="{{ route('meals.edit', $meal) }}">Edit</a>

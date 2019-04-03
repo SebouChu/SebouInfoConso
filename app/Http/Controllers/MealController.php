@@ -19,7 +19,7 @@ class MealController extends Controller
 
   public function index() {
     return view('meals/index', [
-      'meals' => Auth::user()->meals()->get()
+      'meals' => Auth::user()->meals()->with('products')->get()
     ]);
   }
 

@@ -19,4 +19,8 @@ class Meal extends Model
     public function formattedDate() {
       return Carbon::parse($this->date)->toFormattedDateString();
     }
+
+    public function totalEnergy() {
+      return $this->products->sum('energy');
+    }
 }

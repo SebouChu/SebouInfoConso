@@ -8,6 +8,7 @@
   <ul>
     <li>Date : {{ $meal->formattedDate() }}</li>
     <li>Type : {{ \App\Enums\MealType::getDescription($meal->type) }}</li>
+    <li>Total energy : {{ $meal->totalEnergy() }} kcal</li>
   </ul>
 
   <h2>Products</h2>
