@@ -49162,9 +49162,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
+/***/ "./resources/sass/app.sass":
 /*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
+  !*** ./resources/sass/app.sass ***!
   \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -49175,13 +49175,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ 0:
 /*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
+  !*** multi ./resources/js/app.js ./resources/sass/app.sass ***!
   \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /Users/sebastiengaya/Dev/5_LPDAWIN/5-4_PHP/SebouInfoConso/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sebastiengaya/Dev/5_LPDAWIN/5-4_PHP/SebouInfoConso/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /Users/sebastiengaya/Dev/5_LPDAWIN/5-4_PHP/SebouInfoConso/resources/sass/app.sass */"./resources/sass/app.sass");
 
 
 /***/ })
