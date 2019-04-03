@@ -6,7 +6,7 @@
 
   <p>Infos :</p>
   <ul>
-    <li>Date : {{ $meal->date }}</li>
+    <li>Date : {{ $meal->formattedDate() }}</li>
     <li>Type : {{ \App\Enums\MealType::getDescription($meal->type) }}</li>
   </ul>
 
@@ -18,22 +18,30 @@
   @if ($meal->products->count() == 0)
     No products yet.
   @else
-    <table class="table table-hover table-striped table-responsive-lg">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th>Product</th>
           <th>Barcode</th>
+          <th>Name</th>
           <th>Energy</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        @foreach ($meal->products() as $product)
+        @foreach ($meal->products as $product)
           <tr>
+            <td>
+              <a href="{{ route('products.show', $product) }}">{{ $product->barcode }}</a>
+            </td>
             <td>{{ $product->name }}</td>
-            <td>{{ $product->barcode }}</td>
-            <td>{{ $product->energy }}</td>
-            <td>TODO : Delete from JoinTable</td>
+            <td>{{ $product->energy }} kcal</td>
+            <td>
+              @include('shared/delete_form', [
+                'action_url' => route('meals.products.destroy',[$meal, $product]),
+                'small' => true,
+                'label' => 'Remove'
+              ])
+            </td>
           </tr>
         @endforeach
       </tbody>

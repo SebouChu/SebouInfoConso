@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Meal extends Model
 {
@@ -12,6 +13,10 @@ class Meal extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+      return $this->belongsToMany(Product::class);
+    }
+
+    public function formattedDate() {
+      return Carbon::parse($this->date)->toFormattedDateString();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Meal;
 use App\Enums\MealType;
 use BenSampo\Enum\Rules\EnumValue;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -29,9 +30,10 @@ class MealController extends Controller
   }
 
   public function create() {
-    return view('meals/create', [
-      'meal' => new Meal()
-    ]);
+    $meal = new Meal();
+    $meal->date = Carbon::now()->toDateString();
+
+    return view('meals/create', compact('meal'));
   }
 
   public function store(Request $request) {

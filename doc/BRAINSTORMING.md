@@ -1,35 +1,38 @@
+# Partie Controller
+
 Auth middleware to access the app.
 
-- Root : HomeController#index
-- Repas : MealsController scaffolded (index, show, create, store, edit, update & destroy)
-- Produits : ProductsController
-  - Create : Formulaire d'ajout de Product à un Meal avec input du barcode
-  - Store : Ajoute le Product au Meal.
-    Workflow :
-      - Recherche du barcode dans la DB
-      - Si trouvé
-        - On ajoute le product au meal
-      - Sinon
-        - Recherche du barcode dans l'API
-        - Si trouvé
-          - On importe les données dans la DB
-          - On ajoute le product au meal
-        - Sinon
-          - On ramène l'utilisateur sur le create avec une alerte 'not found'
-          
-  - Destroy : Supprime le Product d'un Meal (pas de la db)
-  - Search : via OpenFoodFacts API : code barre -> infos produit. Méthode appelée par XHR. LoadProductInfoFromAPI as private
+- Root : `HomeController#index`
+- Repas : `MealsController` scaffolded (index, show, create, store, edit, update & destroy)
+- Produits :
+  - `ProductsController`
+    - Index : Liste de tous les Products importés
+    - Show : Détails d'un Product avec image
+  - `Meal\ProductsController`
+    - Create : Formulaire d'ajout de Product à un Meal avec input du barcode
+    - Store : Ajoute le Product au Meal.
+    - Destroy : Supprime le Product d'un Meal (pas de la db)
+    - *Private*
+      - Search : via OpenFoodFacts API : code barre -> infos produit.
+      - Import : Ajoute un Product trouvé via API dans la DB
 
-- Sur un repas, CTA "ajouter un produit"
-  -> Input Search Barcode
-  -> Recherche du produit. 3 cas possibles :
-    -> Produit trouvé :
-        - si pas en base : on ajoute le produit à la DB. /!\ Récupération de la valeur énergétique : si kJ, recalculer en kcal
-        - on ajoute au repas
-    -> Produit non trouvé : on retourne à la page précédente avec une alerte 'Not found'
-  -> Une fois la quantité renseignée, on ajoute un MealProduct
+# Infos complémentaires
 
-N.B. Une fois le product importé avec le barcode, il n'est plus supprimé de la DB, les données étant statiques et provenant de l'API OpenFoodFacts.
+- Une fois le product importé avec le barcode, il n'est plus supprimé de la DB, les données étant statiques et provenant de l'API OpenFoodFacts.
+- Valeur énergétique via API :
+  - Valeur : `data["product"]["nutriments"]["energy_value"]`
+  - Unité : `data["product"]["nutriments"]["energy_unit"]`
+- Workflow d'ajout de Product à un Meal :
+  - Recherche du barcode dans la DB
+  - Si trouvé
+    - On ajoute le product au meal
+  - Sinon
+    - Recherche du barcode dans l'API
+    - Si trouvé
+      - On importe les données dans la DB
+      - On ajoute le product au meal
+    - Sinon
+      - On ramène l'utilisateur sur le create avec une alerte 'not found'
 
 # Modèles
 
@@ -60,8 +63,11 @@ N.B. Une fois le product importé avec le barcode, il n'est plus supprimé de la
     created_at      datetime
     updated_at      datetime
 
-Via API : `data["product"]["nutriments"]["energy"]` & unité `data["product"]["nutriments"]["energy_unit"]`
+**Meal & Product Join Table**
 
-Meals<=>Products Join Table
-- meal_id (PFK)
-- product_id (PFK)
+    ====================
+    Table : meal_product
+    ====================
+
+    meal_id         integer         primary key / reference to meals.id
+    product_id      integer         primary key / reference to products.id

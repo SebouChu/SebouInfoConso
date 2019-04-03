@@ -10,4 +10,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Meal::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return "barcode";
+    }
 }

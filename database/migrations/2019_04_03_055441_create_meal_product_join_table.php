@@ -19,6 +19,7 @@ class CreateMealProductJoinTable extends Migration
 
             $table->foreign('meal_id')->references('id')->on('meals')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->primary(['meal_id', 'product_id']);
         });
     }
 

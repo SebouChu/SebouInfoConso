@@ -36,6 +36,9 @@
                       <li class="nav-item">
                           <a class="nav-link" href="{{ route('meals.index') }}">Meals</a>
                       </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ route('products.index') }}">Products</a>
+                      </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -75,10 +78,18 @@
         </nav>
 
         <main class="py-4">
-            <div class="container-fluid">
+            <div class="container">
                 @if(Session::has('notice'))
                     <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
                       {{ Session::get('notice') }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                @endif
+                @if(Session::has('alert'))
+                    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                      {{ Session::get('alert') }}
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>

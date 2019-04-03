@@ -15,6 +15,10 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::resource('meals', 'MealController');
-Route::resource('meals.products', 'ProductController')->only(
+Route::resource('meals.products', 'Meal\ProductController')->only(
   ['create', 'store', 'destroy']
+);
+
+Route::resource('products', 'ProductController')->only(
+  ['index', 'show']
 );

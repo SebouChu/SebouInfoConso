@@ -11,7 +11,6 @@
   @if ($meals->count() > 0)
   <table class="table table-striped table-hover">
     <thead>
-      <th>ID</th>
       <th>Date</th>
       <th>Type</th>
       <th>Actions</th>
@@ -19,13 +18,12 @@
     <tbody>
       @foreach ($meals as $meal)
         <tr>
-          <td>{{ $meal->id }}</td>
-          <td>{{ $meal->date }}</td>
-          <td>{{ $meal->type }}</td>
+          <td>{{ $meal->formattedDate() }}</td>
+          <td>{{ \App\Enums\MealType::getDescription($meal->type) }}</td>
           <td>
-            <a class="btn btn-primary" href="{{ route('meals.show', $meal) }}">Show</a>
-            <a class="btn btn-warning" href="{{ route('meals.edit', $meal) }}">Edit</a>
-            @include('shared/delete_form', ['action_url' => route('meals.destroy', $meal)])
+            <a class="btn btn-primary btn-sm" href="{{ route('meals.show', $meal) }}">Show</a>
+            <a class="btn btn-warning btn-sm" href="{{ route('meals.edit', $meal) }}">Edit</a>
+            @include('shared/delete_form', ['action_url' => route('meals.destroy', $meal), 'small' => true])
           </td>
         </tr>
       @endforeach
