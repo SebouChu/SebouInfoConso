@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Meal;
 use App\Meal;
 use App\Product;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -67,8 +68,12 @@ class ProductController extends Controller
       return $product;
     }
 
-    $url = 'https://fr.openfoodfacts.org/api/v0/produit/'.$barcode.'.json';
-    $data = json_decode(file_get_contents($url), true);
+    $client = new Client([
+      'base_uri' => 'https://fr.openfoodfacts.org/api/v0/produit/',
+      'timeout'  => 5.0
+    ]);
+    $response = $client->request('GET', $barcode);
+    $data = json_decode($response->getBody(), true);
 
     if ($data['status'] === 0) {
       return null;

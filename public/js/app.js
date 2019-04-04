@@ -36680,8 +36680,6 @@ if (token) {
       toggleSource(this.value);
     });
   }
-
-  toggleSource(radioBtns[0].value);
 })();
 
 /***/ }),
