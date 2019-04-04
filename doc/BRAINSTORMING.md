@@ -34,6 +34,16 @@ Auth middleware to access the app.
     - Sinon
       - On ramène l'utilisateur sur le create avec une alerte 'not found'
 
+- Requête pour dernière stat
+
+```sql
+SELECT `products`.`barcode`, `products`.`name`, `products`.`energy`, `meal_product`.`meal_id`
+FROM `meals`
+INNER JOIN `meal_product` ON `meal_product`.`meal_id` = `meals`.`id`
+INNER JOIN `products` ON `meal_product`.`product_id` = `products`.`id`
+WHERE `meals`.`user_id` = 1
+```
+
 # Modèles
 
 **Meal**

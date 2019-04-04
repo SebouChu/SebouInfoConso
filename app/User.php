@@ -14,6 +14,17 @@ class User extends Authenticatable
       return $this->hasMany(Meal::class);
     }
 
+    public function consumedProducts() {
+      return Meal::join('meal_product', 'meal_product.meal_id', '=', 'meals.id')
+                 ->join('products', 'meal_product.product_id', '=', 'products.id')
+                 ->select('products.*')
+                 ->where('meals.user_id', $this->id);
+    }
+
+    public function distinctConsumedProducts() {
+      return $this->consumedProducts()->distinct();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
