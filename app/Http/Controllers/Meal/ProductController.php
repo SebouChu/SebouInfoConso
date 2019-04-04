@@ -20,6 +20,7 @@ class ProductController extends Controller
 
     return view('meals/products/create', [
       'meal' => $meal,
+      'products' => Product::select('barcode', 'name')->orderBy('name')->get(),
       'product' => new Product()
     ]);
   }
@@ -35,7 +36,7 @@ class ProductController extends Controller
     if ($product === null) {
       return redirect()->back()
                        ->withInput($request->input())
-                       ->with('alert', ['Product not found.']);
+                       ->with('alert', 'Product not found.');
     }
 
     if ($meal->products->contains($product->id)) {
@@ -82,10 +83,14 @@ class ProductController extends Controller
     $name = $data['product']['product_name'];
     $image = $data['product']['image_url'];
 
-    $energyUnit = $data['product']['nutriments']['energy_unit'];
-    $energy = intval($data['product']['nutriments']['energy_value']);
-    if ($energyUnit === 'kJ') {
-      $energy = round($energy / 4.184);
+    if (isset($data['product']['nutriments']['energy_value'])) {
+      $energyUnit = $data['product']['nutriments']['energy_unit'];
+      $energy = intval($data['product']['nutriments']['energy_value']);
+      if ($energyUnit === 'kJ') {
+        $energy = round($energy / 4.184);
+      }
+    } else {
+      $energy = 0;
     }
 
     $product = new Product();
