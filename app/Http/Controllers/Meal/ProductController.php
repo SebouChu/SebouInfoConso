@@ -19,9 +19,17 @@ class ProductController extends Controller
   public function create(Meal $meal) {
     $this->authorize('update', $meal);
 
+    $mealProductsIds = $meal->products()
+                            ->pluck('id')
+                            ->toArray();
+
+    $products = Product::select('barcode', 'name')->whereNotIn('id', $mealProductsIds)
+                                                  ->orderBy('name')
+                                                  ->get();
+
     return view('meals/products/create', [
       'meal' => $meal,
-      'products' => Product::select('barcode', 'name')->orderBy('name')->get(),
+      'products' => $products,
       'product' => new Product()
     ]);
   }
