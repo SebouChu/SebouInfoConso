@@ -32,7 +32,7 @@
           <abbr title="required">*</abbr>
         </label>
 
-        <input class="form-control" type="text" name="barcode" id="barcode_input" placeholder="3029330003533" value="{{ old('barcode') }}" required {{ old('barcode') !== null ? '' : 'disabled' }}>
+        <input class="form-control" type="text" name="barcode" id="barcode_input" placeholder="3029330003533" value="{{ old('barcode') }}" required>
       @endif
 
     </div>
