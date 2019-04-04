@@ -21,6 +21,7 @@ class MealController extends Controller
     $mealsByDate = Auth::user()->meals()
                          ->with('products')
                          ->orderBy('date', 'desc')
+                         ->orderBy('created_at', 'desc')
                          ->get()
                          ->groupBy('date');
 

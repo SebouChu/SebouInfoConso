@@ -16,7 +16,7 @@
     </div>
 
     <input type="submit" value="Save" class="btn btn-success d-inline">
-    <a class="btn btn-outline-primary" href="{{ route('meals.show', $meal) }}">Back</a>
+    @include('shared/back_button')
   </form>
 </div>
 @endsection

@@ -13,7 +13,7 @@ class ProductController extends Controller
 
   public function index() {
     return view('products/index', [
-      'products' => Product::select('barcode', 'name')->get()
+      'products' => Product::select('barcode', 'name')->orderBy('name', 'asc')->get()
     ]);
   }
 

@@ -54,7 +54,7 @@
   <div class="links">
     <a class="btn btn-warning" href="{{ route('meals.edit', $meal) }}">Edit</a>
     @include('shared/delete_form', ['action_url' => route('meals.destroy', $meal)])
-    <a class="btn btn-outline-primary" href="{{ route('meals.index') }}">Back</a>
+    @include('shared/back_button')
   </div>
 </div>
 @endsection

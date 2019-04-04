@@ -20,7 +20,7 @@
   <hr>
 
   <div class="links">
-    <a class="btn btn-outline-primary" href="{{ url()->previous() }}">Back</a>
+    @include('shared/back_button')
   </div>
 </div>
 @endsection

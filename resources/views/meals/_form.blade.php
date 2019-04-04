@@ -31,5 +31,5 @@
   </div>
 
   <input type="submit" value="Save" class="btn btn-success d-inline">
-  <a class="btn btn-outline-primary" href="{{ $meal->exists ? route('meals.show', $meal) : route('meals.index') }}">Back</a>
+  @include('shared/back_button')
 </form>
