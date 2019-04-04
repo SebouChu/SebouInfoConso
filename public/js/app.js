@@ -36672,6 +36672,7 @@ if (token) {
     } else {
       selectElt.disabled = true;
       inputElt.disabled = false;
+      inputElt.focus();
     }
   };
 

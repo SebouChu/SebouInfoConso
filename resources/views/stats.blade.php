@@ -24,7 +24,7 @@
                 </a>
               </td>
               <td>{{ $product->name }}</td>
-              <td>{{ $product->energy }}</td>
+              <td>{{ $product->energy }} kcal</td>
             </tr>
           @endforeach
         </tbody>
@@ -52,7 +52,7 @@
                   </a>
                 </td>
                 <td>{{ $product->name }}</td>
-                <td>{{ $product->energy }}</td>
+                <td>{{ $product->energy }} kcal</td>
             </tr>
           @endforeach
         </tbody>
@@ -80,7 +80,7 @@
               </a>
             </td>
             <td>{{ $product->name }}</td>
-            <td>{{ $product->totalEnergy }} ({{ $product->consumedCount }})</td>
+            <td>{{ $product->totalEnergy }} kcal ({{ $product->consumedCount }})</td>
           </tr>
         @endforeach
         </tbody>
