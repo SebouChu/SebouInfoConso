@@ -16,6 +16,14 @@ Auth middleware to access the app.
       - Search : via OpenFoodFacts API : code barre -> infos produit.
       - Import : Ajoute un Product trouvé via API dans la DB
 
+# ProductFinderService (WIP)
+
+- Permet de sortir du controller Meal/ProductController les méthodes search & import.
+- Doit se trouver dans `app/Services`
+- Doit être ajouté dans le Service Container via un Provider (ProductServiceProvider)
+- Le Provider est ajouté aux providers dans `config/app.php`
+- Ainsi, on peut ajouter dans la méthode store du controller en paramètre `ProductFinderService $productFinder` pour l'utiliser.
+
 # Infos complémentaires
 
 - Une fois le product importé avec le barcode, il n'est plus supprimé de la DB, les données étant statiques et provenant de l'API OpenFoodFacts.
