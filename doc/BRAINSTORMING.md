@@ -20,9 +20,8 @@ Auth middleware to access the app.
 
 - Permet de sortir du controller Meal/ProductController les méthodes search & import.
 - Doit se trouver dans `app/Services`
-- Doit être ajouté dans le Service Container via un Provider (ProductServiceProvider)
-- Le Provider est ajouté aux providers dans `config/app.php`
-- Ainsi, on peut ajouter dans la méthode store du controller en paramètre `ProductFinderService $productFinder` pour l'utiliser.
+- On peut ajouter dans la méthode store du controller en paramètre `ProductFinderService $productFinder` pour l'utiliser.
+- Dependency Injection automatique !
 
 # Infos complémentaires
 

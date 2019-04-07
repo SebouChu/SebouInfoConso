@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Meal;
 use App\Meal;
 use App\Product;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
+use App\Services\ProductFinderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -34,14 +34,14 @@ class ProductController extends Controller
     ]);
   }
 
-  public function store(Request $request, Meal $meal) {
+  public function store(Request $request, Meal $meal, ProductFinderService $productFinder) {
     $this->authorize('update', $meal);
 
     $attributes = $request->validate([
       'barcode' => 'required'
     ]);
 
-    $product = $this->search($attributes['barcode']);
+    $product = $productFinder->search($attributes['barcode']);
     if ($product === null) {
       return redirect()->back()
                        ->withInput($request->input())
@@ -65,54 +65,5 @@ class ProductController extends Controller
     Session::flash('notice', 'Product was successfully deleted from your meal!');
 
     return redirect()->route('meals.show', $meal->id);
-  }
-
-  // PRIVATE //
-
-  private function search(string $barcode) {
-    $product = Product::where('barcode', $barcode)->first();
-
-    if ($product !== null) {
-      return $product;
-    }
-
-    $client = new Client([
-      'base_uri' => 'https://fr.openfoodfacts.org/api/v0/produit/',
-      'timeout'  => 5.0
-    ]);
-    $response = $client->request('GET', $barcode);
-    $data = json_decode($response->getBody(), true);
-
-    if ($data['status'] === 0) {
-      return null;
-    }
-
-    $product = $this->import($barcode, $data);
-
-    return $product;
-  }
-
-  private function import(string $barcode, array $data) {
-    $name = $data['product']['product_name'];
-    $image = $data['product']['image_url'];
-
-    if (isset($data['product']['nutriments']['energy_value'])) {
-      $energyUnit = $data['product']['nutriments']['energy_unit'];
-      $energy = intval($data['product']['nutriments']['energy_value']);
-      if ($energyUnit === 'kJ') {
-        $energy = round($energy / 4.184);
-      }
-    } else {
-      $energy = 0;
-    }
-
-    $product = new Product();
-    $product->name = $name;
-    $product->image = $image;
-    $product->barcode = $barcode;
-    $product->energy = $energy;
-    $product->save();
-
-    return $product;
   }
 }
