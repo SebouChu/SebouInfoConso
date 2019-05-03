@@ -36,7 +36,13 @@
               <a href="{{ route('products.show', $product) }}">{{ $product->barcode }}</a>
             </td>
             <td>{{ $product->name }}</td>
-            <td>{{ $product->energy }} kcal</td>
+            <td>
+              {{ $product->energy * $product->pivot->quantity }} kcal
+              @if ($product->pivot->quantity > 1)
+                <br>
+                <span class="small text-muted">{{ $product->pivot->quantity }} &times; {{ $product->energy }} kcal</span>
+              @endif
+            </td>
             <td>
               <span class="align-middle">{{ $product->pivot->quantity }}</span>
               <a class="btn btn-xs btn-warning ml-1" href="{{ route('meals.products.edit', [$meal, $product]) }}">
