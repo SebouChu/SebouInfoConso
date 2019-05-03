@@ -38,10 +38,13 @@ class ProductController extends Controller
     $this->authorize('update', $meal);
 
     $attributes = $request->validate([
-      'barcode' => 'required'
+      'barcode' => 'required',
+      'quantity' => 'required|integer|min:1'
     ]);
 
     $product = $productFinder->search($attributes['barcode']);
+    $quantity = $attributes['quantity'];
+
     if ($product === null) {
       return redirect()->back()
                        ->withInput($request->input())
@@ -51,7 +54,7 @@ class ProductController extends Controller
     if ($meal->products->contains($product->id)) {
       Session::flash('alert', 'Your meal already contains this product.');
     } else {
-      $meal->products()->attach($product);
+      $meal->products()->attach($product, compact('quantity'));
       Session::flash('notice', 'Product was successfully added to your meal!');
     }
 

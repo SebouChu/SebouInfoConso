@@ -17,7 +17,7 @@ class User extends Authenticatable
     public function consumedProducts() {
       return Meal::join('meal_product', 'meal_product.meal_id', '=', 'meals.id')
                  ->join('products', 'meal_product.product_id', '=', 'products.id')
-                 ->select('products.*')
+                 ->select('products.*', 'meal_product.quantity')
                  ->where('meals.user_id', $this->id);
     }
 

@@ -5,6 +5,8 @@
     @method('PUT')
   @endif
 
+  @include('shared/form_errors', compact('errors'))
+
   <div class="form-row">
 
     <div class="col-md-6">

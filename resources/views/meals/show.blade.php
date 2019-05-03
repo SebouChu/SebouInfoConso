@@ -25,6 +25,7 @@
           <th>Barcode</th>
           <th>Name</th>
           <th>Energy</th>
+          <th>Quantity</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -36,6 +37,7 @@
             </td>
             <td>{{ $product->name }}</td>
             <td>{{ $product->energy }} kcal</td>
+            <td>{{ $product->pivot->quantity }}</td>
             <td>
               @include('shared/delete_form', [
                 'action_url' => route('meals.products.destroy',[$meal, $product]),
