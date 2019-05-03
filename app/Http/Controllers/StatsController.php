@@ -24,7 +24,7 @@ class StatsController extends Controller
 
       $mostEnergizingProductsByTotalConsumed = Auth::user()->consumedProducts()
                                                            ->groupBy('id')
-                                                           ->selectRaw('SUM(products.energy) as totalEnergy, COUNT(products.id) as consumedCount')
+                                                           ->selectRaw('SUM(`products`.`energy` * `meal_product`.`quantity`) as totalEnergy, SUM(`meal_product`.`quantity`) as consumedCount')
                                                            ->orderBy('totalEnergy', 'desc')
                                                            ->limit(5)
                                                            ->get();

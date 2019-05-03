@@ -21,6 +21,8 @@ class Meal extends Model
     }
 
     public function totalEnergy() {
-      return $this->products->sum('energy');
+      return $this->products->sum(function($product){
+        return $product->energy * $product->pivot->quantity;
+      });
     }
 }
