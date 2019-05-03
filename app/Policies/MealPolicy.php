@@ -23,25 +23,13 @@ class MealPolicy
     }
 
     /**
-     * Determine whether the user can update the meal.
+     * Determine whether the user can manage the meal.
      *
      * @param  \App\User  $user
      * @param  \App\Meal  $meal
      * @return mixed
      */
-    public function update(User $user, Meal $meal)
-    {
-        return $user->id === $meal->user_id;
-    }
-
-    /**
-     * Determine whether the user can delete the meal.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Meal  $meal
-     * @return mixed
-     */
-    public function delete(User $user, Meal $meal)
+    public function manage(User $user, Meal $meal)
     {
         return $user->id === $meal->user_id;
     }

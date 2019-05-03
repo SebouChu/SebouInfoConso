@@ -37,7 +37,12 @@
             </td>
             <td>{{ $product->name }}</td>
             <td>{{ $product->energy }} kcal</td>
-            <td>{{ $product->pivot->quantity }}</td>
+            <td>
+              <span class="align-middle">{{ $product->pivot->quantity }}</span>
+              <a class="btn btn-xs btn-warning ml-1" href="{{ route('meals.products.edit', [$meal, $product]) }}">
+                <i class="fas fa-pencil-alt"></i>
+              </a>
+            </td>
             <td>
               @include('shared/delete_form', [
                 'action_url' => route('meals.products.destroy',[$meal, $product]),

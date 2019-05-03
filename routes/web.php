@@ -22,7 +22,7 @@ Route::post('/register', 'Auth\RegisterController@register');
 
 Route::resource('meals', 'MealController');
 Route::resource('meals.products', 'Meal\ProductController')->only(
-  ['create', 'store', 'destroy']
+  ['create', 'store', 'edit', 'update', 'destroy']
 );
 
 Route::resource('products', 'ProductController')->only(

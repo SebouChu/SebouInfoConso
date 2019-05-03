@@ -62,13 +62,13 @@ class MealController extends Controller
   }
 
   public function edit(Meal $meal) {
-    $this->authorize('update', $meal);
+    $this->authorize('manage', $meal);
 
     return view('meals/edit', compact('meal'));
   }
 
   public function update(Request $request, Meal $meal) {
-    $this->authorize('update', $meal);
+    $this->authorize('manage', $meal);
 
     $attributes = $request->validate([
       'date' => 'required|date',
@@ -85,7 +85,7 @@ class MealController extends Controller
   }
 
   public function destroy(Meal $meal) {
-    $this->authorize('delete', $meal);
+    $this->authorize('manage', $meal);
 
     $meal->delete();
     Session::flash('notice', 'Meal was successfully destroyed!');

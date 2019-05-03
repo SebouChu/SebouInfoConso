@@ -17,7 +17,7 @@ class ProductController extends Controller
   }
 
   public function create(Meal $meal) {
-    $this->authorize('update', $meal);
+    $this->authorize('manage', $meal);
 
     $mealProductsIds = $meal->products()
                             ->pluck('id')
@@ -35,7 +35,7 @@ class ProductController extends Controller
   }
 
   public function store(Request $request, Meal $meal, ProductFinderService $productFinder) {
-    $this->authorize('update', $meal);
+    $this->authorize('manage', $meal);
 
     $attributes = $request->validate([
       'barcode' => 'required',
@@ -61,8 +61,43 @@ class ProductController extends Controller
     return redirect()->route('meals.show', $meal->id);
   }
 
+  public function edit(Meal $meal, Product $product) {
+    $this->authorize('manage', $meal);
+
+    if (!$meal->products->contains($product->id)) {
+      return redirect()->route('meals.show', $meal->id)
+                       ->with('alert', 'Your meal doesn\'t contain this product.');
+    }
+
+    $quantity = $meal->products()
+                     ->where('id', $product->id)
+                     ->pluck('meal_product.quantity')
+                     ->first();
+
+    return view('meals/products/edit', compact('meal', 'product', 'quantity'));
+  }
+
+  public function update(Request $request, Meal $meal, Product $product) {
+    $this->authorize('manage', $meal);
+
+    if (!$meal->products->contains($product->id)) {
+      return redirect()->route('meals.show', $meal->id)
+                       ->with('alert', 'Your meal doesn\'t contain this product.');
+    }
+
+    $attributes = $request->validate([
+      'quantity' => 'required|integer|min:1'
+    ]);
+    $quantity = $attributes["quantity"];
+
+    $meal->products()->updateExistingPivot($product->id, compact('quantity'));
+
+    return redirect()->route('meals.show', $meal->id)
+                     ->with('notice', 'Product successfully updated!');
+  }
+
   public function destroy(Meal $meal, Product $product) {
-    $this->authorize('update', $meal);
+    $this->authorize('manage', $meal);
 
     $meal->products()->detach($product);
     Session::flash('notice', 'Product was successfully deleted from your meal!');
