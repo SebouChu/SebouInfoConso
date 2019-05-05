@@ -64,15 +64,15 @@ class ProductController extends Controller
   public function edit(Meal $meal, Product $product) {
     $this->authorize('manage', $meal);
 
-    if (!$meal->products->contains($product->id)) {
-      return redirect()->route('meals.show', $meal->id)
-                       ->with('alert', 'Your meal doesn\'t contain this product.');
-    }
-
     $quantity = $meal->products()
                      ->where('id', $product->id)
                      ->pluck('meal_product.quantity')
                      ->first();
+
+    if ($quantity === null) {
+      return redirect()->route('meals.show', $meal->id)
+                       ->with('alert', 'Your meal doesn\'t contain this product.');
+    }
 
     return view('meals/products/edit', compact('meal', 'product', 'quantity'));
   }

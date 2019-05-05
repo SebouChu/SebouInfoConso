@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index()
     {
       $recentMeals = Auth::user()->meals()
-                                 ->with('products')
+                                 ->with('products:energy')
                                  ->orderBy('date', 'desc')
                                  ->orderBy('created_at', 'desc')
                                  ->limit(5)
