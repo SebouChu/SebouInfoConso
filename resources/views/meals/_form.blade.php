@@ -11,7 +11,7 @@
 
     <div class="col-md-6">
       <div class="form-group">
-        <label class="form-control-label" for="title">
+        <label class="form-control-label" for="date">
           Date
           <abbr title="required">*</abbr>
         </label>
