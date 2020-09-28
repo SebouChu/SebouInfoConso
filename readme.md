@@ -18,4 +18,4 @@ Application Laravel permettant de suivre la consommation en calories des repas d
 - Build les assets avec `npm run dev`
 - Lancer les migrations avec `php artisan migrate`
 - Régler l'accès au dossier `public` (MAMP, Laravel Valet, etc.)
-- *Have fun*
+- **Have fun**
